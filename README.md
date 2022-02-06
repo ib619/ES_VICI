@@ -9,6 +9,12 @@
 ## Plotting Accelerometer Data
 
 ### Raspberry Pi
+#### Overview
+The script configures the acceletrometer to collect data at 10Hz rate continuously with range +/-2G.
+Due to the restrictions on message rate on public MQTT brockers it sends data via MQTT in large packets.
+The measurements are being passed through a moving average filter to remove some noise from the signal.
+
+#### Running the script
 1. Install the following libraries
 	* smbus2
 	* paho-mqtt
@@ -18,4 +24,17 @@
 	* **FILTER_WINDOW_SIZE** sets the buffer lenght for a moving average filter (default = 16)
 	* **PACKET_SIZE** sets the number of measurements in a packet (default = 16)
 	* **NUMBER_OF_PACKETS** sets the total number of packets to be sent to PC (default = 6)
-	* **REMOVE_GRAVITY_OFFSET** removes 1g offset due to gravity from Z-Axis measurement (default = 0.1)
+	* **REMOVE_GRAVITY_OFFSET** removes 1G offset due to gravity from Z-Axis measurement (default = True)
+
+### PC
+#### Overview
+The script uses multithreading to continuously receive data from Raspberry Pi via MQTT and plot the data in real time.
+
+#### Running the script
+1. Install the following libraries
+	* paho-mqtt
+	* matplotlib
+2. Run **pc_plot_acc.py**
+3. The script operation can be changed via altering constants inside **pc_plot_acc.py**
+	* **ACCEL_AXIS_MIN** sets the minimum value on the acceleration axis (default -1.5)
+	* **ACCEL_AXIS_MAX** sets the maximum value on the acceleration axis (default 1.5)
