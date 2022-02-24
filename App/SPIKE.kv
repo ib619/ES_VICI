@@ -1,0 +1,298 @@
+MyScreenManager:
+
+<MyScreenManager@ScreenManager>:
+    canvas.before:
+        Color:
+            rgb: 245/255, 243/255, 244/255
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    Screen:
+        name: "connect"
+        BoxLayout:
+            orientation: "vertical"
+
+            BoxLayout:
+                padding: ("40dp", "140dp", "40dp", "40dp")
+                spacing: "40dp"
+                orientation: "vertical"
+                RoundedLabel:
+                    font_size: "25dp"
+                    text_size: self.width, None
+                    halign: "center"
+                    text: app.connect_status
+
+                RoundedToggle:
+                    size_hint: 1, .4
+                    font_size: "25dp"
+                    text_size: self.width, None
+                    halign: "center"
+                    text: app.connect_button_text
+                    on_state: app.connect_to_mqtt(self)
+
+
+
+
+            BoxLayout:
+                canvas.before:
+                    Color:
+                        rgb: 177/255, 167/255, 166/255
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+                orientation: "horizontal"
+                size_hint: 1, .15
+                padding: 0,0,0,0
+                spacing: 0
+
+                NavButton:
+                    on_press: root.current = "connect"
+
+                    Image:
+                        source: "images/cloud.png"
+                        allow_stretch: True
+                        keep_ratio: True
+                        center_x: self.width and self.parent.center_x
+                        center_y: self.height and self.parent.center_y
+                        size_hint_y: None
+                        size_hint_x: None
+                        width: self.parent.width * app.connected_icon_width
+                        height: self.parent.height * 0.6
+
+                    Image:
+                        source: "images/cancel.png"
+                        allow_stretch: True
+                        keep_ratio: True
+                        center_x: self.width and self.parent.center_x
+                        center_y: self.height and self.parent.center_y
+                        size_hint_y: None
+                        size_hint_x: None
+                        width: self.parent.width * app.disconnected_icon_width
+                        height: self.parent.height * 0.6
+
+                NavButton:
+                    on_press: root.transition.direction = "left"; root.current = "arm"
+
+                    Image:
+                        source: "images/shield_unprotected.png"
+                        allow_stretch: True
+                        keep_ratio: True
+                        center_x: self.width and self.parent.center_x
+                        center_y: self.height and self.parent.center_y
+                        size_hint_y: None
+                        size_hint_x: None
+                        width: self.parent.width * app.shield_unprotected_width
+                        height: self.parent.height * 0.6
+
+                    Image:
+                        source: "images/shield_protected.png"
+                        allow_stretch: True
+                        keep_ratio: True
+                        center_x: self.width and self.parent.center_x
+                        center_y: self.height and self.parent.center_y
+                        size_hint_y: None
+                        size_hint_x: None
+                        width: self.parent.width * app.shield_protected_width
+                        height: self.parent.height * 0.6
+
+                    Image:
+                        source: "images/warning.png"
+                        allow_stretch: True
+                        keep_ratio: True
+                        center_x: self.width and self.parent.center_x
+                        center_y: self.height and self.parent.center_y
+                        size_hint_y: None
+                        size_hint_x: None
+                        width: self.parent.width * app.warning_width
+                        height: self.parent.height * 0.6
+
+                NavButton:
+                    on_press: root.transition.direction = "left"; root.current = "settings"
+
+                    Image:
+                        source: "images/setting.png"
+                        allow_stretch: True
+                        keep_ratio: True
+                        center_x: self.width and self.parent.center_x
+                        center_y: self.height and self.parent.center_y
+                        size_hint_y: None
+                        height: self.parent.height * 0.6
+
+    Screen:
+        name: "arm"
+        BoxLayout:
+            orientation: "vertical"
+
+            BoxLayout:
+                padding: ("40dp", "140dp", "40dp", "40dp")
+                spacing: "40dp"
+                orientation: "vertical"
+                RoundedLabel:
+                    font_size: "25dp"
+                    text_size: self.width, None
+                    halign: "center"
+                    text: app.protect_status
+
+                RoundedToggle:
+                    size_hint: 1, .4
+                    font_size: "25dp"
+                    text_size: self.width, None
+                    halign: "center"
+                    text: app.arm_button_text
+                    on_state: app.send_arm_message(self)
+                    disabled: app.arm_button_disabled
+
+
+
+            BoxLayout:
+                canvas.before:
+                    Color:
+                        rgb: 177/255, 167/255, 166/255
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+                orientation: "horizontal"
+                size_hint: 1, .15
+                padding: 0,0,0,0
+                spacing: 0
+
+                NavButton:
+                    on_press: root.transition.direction = "right"; root.current = "connect"
+
+                    Image:
+                        source: "images/cloud.png"
+                        allow_stretch: True
+                        keep_ratio: True
+                        center_x: self.width and self.parent.center_x
+                        center_y: self.height and self.parent.center_y
+                        size_hint_y: None
+                        size_hint_x: None
+                        width: self.parent.width * app.connected_icon_width
+                        height: self.parent.height * 0.6
+
+                    Image:
+                        source: "images/cancel.png"
+                        allow_stretch: True
+                        keep_ratio: True
+                        center_x: self.width and self.parent.center_x
+                        center_y: self.height and self.parent.center_y
+                        size_hint_y: None
+                        size_hint_x: None
+                        width: self.parent.width * app.disconnected_icon_width
+                        height: self.parent.height * 0.6
+
+                NavButton:
+                    on_press: root.current = "arm"
+
+                    Image:
+                        source: "images/shield_unprotected.png"
+                        allow_stretch: True
+                        keep_ratio: True
+                        center_x: self.width and self.parent.center_x
+                        center_y: self.height and self.parent.center_y
+                        size_hint_y: None
+                        size_hint_x: None
+                        width: self.parent.width * app.shield_unprotected_width
+                        height: self.parent.height * 0.6
+
+                    Image:
+                        source: "images/shield_protected.png"
+                        allow_stretch: True
+                        keep_ratio: True
+                        center_x: self.width and self.parent.center_x
+                        center_y: self.height and self.parent.center_y
+                        size_hint_y: None
+                        size_hint_x: None
+                        width: self.parent.width * app.shield_protected_width
+                        height: self.parent.height * 0.6
+
+                    Image:
+                        source: "images/warning.png"
+                        allow_stretch: True
+                        keep_ratio: True
+                        center_x: self.width and self.parent.center_x
+                        center_y: self.height and self.parent.center_y
+                        size_hint_y: None
+                        size_hint_x: None
+                        width: self.parent.width * app.warning_width
+                        height: self.parent.height * 0.6
+
+                NavButton:
+                    on_press: root.transition.direction = "left"; root.current = "settings"
+
+                    Image:
+                        source: "images/setting.png"
+                        allow_stretch: True
+                        keep_ratio: True
+                        center_x: self.width and self.parent.center_x
+                        center_y: self.height and self.parent.center_y
+                        size_hint_y: None
+                        height: self.parent.height * 0.6
+
+    Screen:
+        name: "settings"
+        BoxLayout:
+            orientation: "vertical"
+
+            Button:
+                text: "Settings"
+
+            BoxLayout:
+                orientation: "horizontal"
+                size_hint: 1, .15
+                padding: 1,0,1,0
+                spacing: 1
+
+                Button:
+                    text: "Connect"
+                    on_press: root.transition.direction = "right"; root.current = "connect"
+
+                Button:
+                    text: "Arm"
+                    on_press: root.transition.direction = "right"; root.current = "arm"
+
+                Button:
+                    text: "Settings"
+                    on_press: root.current = "settings"
+
+
+<RoundedButton@Button>:
+    background_color: 0,0,0,0
+    canvas.before:
+        Color:
+            rgba: (.4, .4, .4, 1) if self.state == 'normal' else (0, .7, .7, 1)
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [40,]
+
+<RoundedToggle@ToggleButton>:
+    background_color: 0,0,0,0
+    canvas.before:
+        Color:
+            rgba: (249/255, 139/255, 135/255, 1) if self.state == 'normal' else (141/255, 253/255, 135/255, 1)
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [40,]
+
+
+<RoundedLabel@Label>:
+    background_color: 0,0,0,0
+    canvas.before:
+        Color:
+            rgba: (211/255, 211/255, 211/255, 1)
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [40,]
+
+<NavButton@Button>:
+    background_color: 0,0,0,0
+    canvas.before:
+        Color:
+            rgba: (177/255, 167/255, 166/255, 1) if self.state == 'normal' else (211/255, 211/255, 211/255, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
