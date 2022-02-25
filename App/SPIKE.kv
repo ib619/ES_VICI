@@ -1,6 +1,6 @@
 MyScreenManager:
 
-<MyScreenManager@ScreenManager>:
+<MyScreenManager>:
     canvas.before:
         Color:
             rgb: 245/255, 243/255, 244/255
@@ -20,17 +20,15 @@ MyScreenManager:
                     font_size: "25dp"
                     text_size: self.width, None
                     halign: "center"
-                    text: app.connect_status
+                    text: root.connect_status
 
                 RoundedToggle:
                     size_hint: 1, .4
                     font_size: "25dp"
                     text_size: self.width, None
                     halign: "center"
-                    text: app.connect_button_text
+                    text: root.connect_button_text
                     on_state: app.connect_to_mqtt(self)
-
-
 
 
             BoxLayout:
@@ -56,7 +54,7 @@ MyScreenManager:
                         center_y: self.height and self.parent.center_y
                         size_hint_y: None
                         size_hint_x: None
-                        width: self.parent.width * app.connected_icon_width
+                        width: self.parent.width * root.connected_icon_width
                         height: self.parent.height * 0.6
 
                     Image:
@@ -67,7 +65,7 @@ MyScreenManager:
                         center_y: self.height and self.parent.center_y
                         size_hint_y: None
                         size_hint_x: None
-                        width: self.parent.width * app.disconnected_icon_width
+                        width: self.parent.width * root.disconnected_icon_width
                         height: self.parent.height * 0.6
 
                 NavButton:
@@ -81,7 +79,7 @@ MyScreenManager:
                         center_y: self.height and self.parent.center_y
                         size_hint_y: None
                         size_hint_x: None
-                        width: self.parent.width * app.shield_unprotected_width
+                        width: self.parent.width * root.shield_unprotected_width
                         height: self.parent.height * 0.6
 
                     Image:
@@ -92,7 +90,7 @@ MyScreenManager:
                         center_y: self.height and self.parent.center_y
                         size_hint_y: None
                         size_hint_x: None
-                        width: self.parent.width * app.shield_protected_width
+                        width: self.parent.width * root.shield_protected_width
                         height: self.parent.height * 0.6
 
                     Image:
@@ -103,7 +101,7 @@ MyScreenManager:
                         center_y: self.height and self.parent.center_y
                         size_hint_y: None
                         size_hint_x: None
-                        width: self.parent.width * app.warning_width
+                        width: self.parent.width * root.warning_width
                         height: self.parent.height * 0.6
 
                 NavButton:
@@ -131,16 +129,17 @@ MyScreenManager:
                     font_size: "25dp"
                     text_size: self.width, None
                     halign: "center"
-                    text: app.protect_status
+                    text: root.protect_status
 
                 RoundedToggle:
+                    id: arm_toggle
                     size_hint: 1, .4
                     font_size: "25dp"
                     text_size: self.width, None
                     halign: "center"
-                    text: app.arm_button_text
+                    text: "Arm" if self.state == "normal" else "Disarm"
                     on_state: app.send_arm_message(self)
-                    disabled: app.arm_button_disabled
+                    disabled: root.arm_button_disabled
 
 
 
@@ -167,7 +166,7 @@ MyScreenManager:
                         center_y: self.height and self.parent.center_y
                         size_hint_y: None
                         size_hint_x: None
-                        width: self.parent.width * app.connected_icon_width
+                        width: self.parent.width * root.connected_icon_width
                         height: self.parent.height * 0.6
 
                     Image:
@@ -178,7 +177,7 @@ MyScreenManager:
                         center_y: self.height and self.parent.center_y
                         size_hint_y: None
                         size_hint_x: None
-                        width: self.parent.width * app.disconnected_icon_width
+                        width: self.parent.width * root.disconnected_icon_width
                         height: self.parent.height * 0.6
 
                 NavButton:
@@ -192,7 +191,7 @@ MyScreenManager:
                         center_y: self.height and self.parent.center_y
                         size_hint_y: None
                         size_hint_x: None
-                        width: self.parent.width * app.shield_unprotected_width
+                        width: self.parent.width * root.shield_unprotected_width
                         height: self.parent.height * 0.6
 
                     Image:
@@ -203,7 +202,7 @@ MyScreenManager:
                         center_y: self.height and self.parent.center_y
                         size_hint_y: None
                         size_hint_x: None
-                        width: self.parent.width * app.shield_protected_width
+                        width: self.parent.width * root.shield_protected_width
                         height: self.parent.height * 0.6
 
                     Image:
@@ -214,7 +213,7 @@ MyScreenManager:
                         center_y: self.height and self.parent.center_y
                         size_hint_y: None
                         size_hint_x: None
-                        width: self.parent.width * app.warning_width
+                        width: self.parent.width * root.warning_width
                         height: self.parent.height * 0.6
 
                 NavButton:
