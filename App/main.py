@@ -2,6 +2,7 @@ from kivy.app import App
 import paho.mqtt.client as mqtt
 from kivy.properties import StringProperty, BooleanProperty, NumericProperty, Clock
 from kivy.uix.screenmanager import ScreenManager
+from kivy.core.window import Window
 
 
 class MyScreenManager(ScreenManager):
@@ -108,4 +109,6 @@ class SPIKE(App):
                 self.arm_event = Clock.schedule_once(self.manager.timer_callback, 8)
 
 
-SPIKE().run()
+if __name__ == '__main__':
+    Window.size = (360, 720)
+    SPIKE().run()

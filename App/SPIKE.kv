@@ -13,18 +13,28 @@ MyScreenManager:
             orientation: "vertical"
 
             BoxLayout:
-                padding: ("40dp", "140dp", "40dp", "40dp")
+                padding: ("40dp", "50dp", "40dp", "40dp")
                 spacing: "40dp"
                 orientation: "vertical"
-                RoundedLabel:
-                    font_size: "25dp"
+
+                Label:
+                    font_size: "72dp"
                     text_size: self.width, None
+                    halign: "center"
+                    markup: True
+                    text: '[color=000000]VICI[/color]'
+                    font_name: "fonts/Gothic/GothicA1-Light.ttf"
+                    size_hint_y: 0.5
+
+                RoundedLabel:
+                    font_size: "20dp"
+                    text_size: self.width * 0.9, None
                     halign: "center"
                     text: root.connect_status
 
                 RoundedToggle:
-                    size_hint: 1, .4
-                    font_size: "25dp"
+                    size_hint: 1, .3
+                    font_size: "20dp"
                     text_size: self.width, None
                     halign: "center"
                     text: root.connect_button_text
@@ -39,7 +49,7 @@ MyScreenManager:
                         pos: self.pos
                         size: self.size
                 orientation: "horizontal"
-                size_hint: 1, .15
+                size_hint: 1, .1
                 padding: 0,0,0,0
                 spacing: 0
 
@@ -55,7 +65,7 @@ MyScreenManager:
                         size_hint_y: None
                         size_hint_x: None
                         width: self.parent.width * root.connected_icon_width
-                        height: self.parent.height * 0.6
+                        height: self.parent.height * 0.5
 
                     Image:
                         source: "images/cancel.png"
@@ -66,7 +76,7 @@ MyScreenManager:
                         size_hint_y: None
                         size_hint_x: None
                         width: self.parent.width * root.disconnected_icon_width
-                        height: self.parent.height * 0.6
+                        height: self.parent.height * 0.5
 
                 NavButton:
                     on_press: root.transition.direction = "left"; root.current = "arm"
@@ -80,7 +90,7 @@ MyScreenManager:
                         size_hint_y: None
                         size_hint_x: None
                         width: self.parent.width * root.shield_unprotected_width
-                        height: self.parent.height * 0.6
+                        height: self.parent.height * 0.5
 
                     Image:
                         source: "images/shield_protected.png"
@@ -91,7 +101,7 @@ MyScreenManager:
                         size_hint_y: None
                         size_hint_x: None
                         width: self.parent.width * root.shield_protected_width
-                        height: self.parent.height * 0.6
+                        height: self.parent.height * 0.5
 
                     Image:
                         source: "images/warning.png"
@@ -102,7 +112,7 @@ MyScreenManager:
                         size_hint_y: None
                         size_hint_x: None
                         width: self.parent.width * root.warning_width
-                        height: self.parent.height * 0.6
+                        height: self.parent.height * 0.5
 
                 NavButton:
                     on_press: root.transition.direction = "left"; root.current = "settings"
@@ -114,7 +124,7 @@ MyScreenManager:
                         center_x: self.width and self.parent.center_x
                         center_y: self.height and self.parent.center_y
                         size_hint_y: None
-                        height: self.parent.height * 0.6
+                        height: self.parent.height * 0.5
 
     Screen:
         name: "arm"
@@ -122,19 +132,29 @@ MyScreenManager:
             orientation: "vertical"
 
             BoxLayout:
-                padding: ("40dp", "140dp", "40dp", "40dp")
+                padding: ("40dp", "50dp", "40dp", "40dp")
                 spacing: "40dp"
                 orientation: "vertical"
+
+                Label:
+                    font_size: "72dp"
+                    text_size: self.width, None
+                    halign: "center"
+                    markup: True
+                    text: '[color=000000]VICI[/color]'
+                    font_name: "fonts/Gothic/GothicA1-Light.ttf"
+                    size_hint_y: 0.5
+
                 RoundedLabel:
-                    font_size: "25dp"
+                    font_size: "20dp"
                     text_size: self.width, None
                     halign: "center"
                     text: root.protect_status
 
                 RoundedToggle:
                     id: arm_toggle
-                    size_hint: 1, .4
-                    font_size: "25dp"
+                    size_hint: 1, .3
+                    font_size: "20dp"
                     text_size: self.width, None
                     halign: "center"
                     text: "Arm" if self.state == "normal" else "Disarm"
@@ -151,7 +171,7 @@ MyScreenManager:
                         pos: self.pos
                         size: self.size
                 orientation: "horizontal"
-                size_hint: 1, .15
+                size_hint: 1, .1
                 padding: 0,0,0,0
                 spacing: 0
 
@@ -167,7 +187,7 @@ MyScreenManager:
                         size_hint_y: None
                         size_hint_x: None
                         width: self.parent.width * root.connected_icon_width
-                        height: self.parent.height * 0.6
+                        height: self.parent.height * 0.5
 
                     Image:
                         source: "images/cancel.png"
@@ -178,7 +198,7 @@ MyScreenManager:
                         size_hint_y: None
                         size_hint_x: None
                         width: self.parent.width * root.disconnected_icon_width
-                        height: self.parent.height * 0.6
+                        height: self.parent.height * 0.5
 
                 NavButton:
                     on_press: root.current = "arm"
@@ -192,7 +212,7 @@ MyScreenManager:
                         size_hint_y: None
                         size_hint_x: None
                         width: self.parent.width * root.shield_unprotected_width
-                        height: self.parent.height * 0.6
+                        height: self.parent.height * 0.5
 
                     Image:
                         source: "images/shield_protected.png"
@@ -203,7 +223,7 @@ MyScreenManager:
                         size_hint_y: None
                         size_hint_x: None
                         width: self.parent.width * root.shield_protected_width
-                        height: self.parent.height * 0.6
+                        height: self.parent.height * 0.5
 
                     Image:
                         source: "images/warning.png"
@@ -214,7 +234,7 @@ MyScreenManager:
                         size_hint_y: None
                         size_hint_x: None
                         width: self.parent.width * root.warning_width
-                        height: self.parent.height * 0.6
+                        height: self.parent.height * 0.5
 
                 NavButton:
                     on_press: root.transition.direction = "left"; root.current = "settings"
@@ -226,7 +246,7 @@ MyScreenManager:
                         center_x: self.width and self.parent.center_x
                         center_y: self.height and self.parent.center_y
                         size_hint_y: None
-                        height: self.parent.height * 0.6
+                        height: self.parent.height * 0.5
 
     Screen:
         name: "settings"
@@ -238,7 +258,7 @@ MyScreenManager:
 
             BoxLayout:
                 orientation: "horizontal"
-                size_hint: 1, .15
+                size_hint: 1, .1
                 padding: 1,0,1,0
                 spacing: 1
 
@@ -278,6 +298,7 @@ MyScreenManager:
 
 <RoundedLabel@Label>:
     background_color: 0,0,0,0
+    color: 0, 0, 0, 1
     canvas.before:
         Color:
             rgba: (211/255, 211/255, 211/255, 1)
@@ -290,8 +311,7 @@ MyScreenManager:
     background_color: 0,0,0,0
     canvas.before:
         Color:
-            rgba: (177/255, 167/255, 166/255, 1) if self.state == 'normal' else (211/255, 211/255, 211/255, 1)
+            rgba: (180/255, 180/255, 180/255, 1) if self.state == 'normal' else (211/255, 211/255, 211/255, 1)
         Rectangle:
             pos: self.pos
             size: self.size
-
