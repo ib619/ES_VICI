@@ -44,9 +44,8 @@ The script uses multithreading to continuously receive data from Raspberry Pi vi
 ### Advanced features
 In addition to the secure MQTT protocol for communication between your device and the Pi, a few advanced features are added to ensure accurate and efficient transfer of data from the sensors and to improve user experience.
 
-## Filtering input sensor data
+#### Filtering input sensor data
 A moving average filter is used to remove high frequency noise from the sensor data. 
-## Loosing connection to your device and reconnecting
+#### Loosing connection to your device and reconnecting
 In the case that a user moves to an area where they are not able to connect to their device, the device will detect a loss of connection and begin to store event data locally. Once the connection is re-established, the device will update the user if there where any drink spike events detected.
-## Push notifications to alert of a possible spike event
-## 
+#### Push notifications to alert of a possible spike event
