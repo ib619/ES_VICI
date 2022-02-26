@@ -3,10 +3,12 @@ import paho.mqtt.client as mqtt
 from kivy.properties import StringProperty, BooleanProperty, NumericProperty, Clock
 from kivy.uix.screenmanager import ScreenManager
 from kivy.core.window import Window
+import time
+import plyer
 
 
 class MyScreenManager(ScreenManager):
-    protect_status = StringProperty("Your drink is not protected")
+    protect_status = StringProperty("Your drink is not protected!")
     arm_button_disabled = BooleanProperty(False)
     arm_button_text = StringProperty("Arm")
     arm_button_state = StringProperty("normal")
@@ -21,6 +23,8 @@ class MyScreenManager(ScreenManager):
     disconnected_icon_width = NumericProperty(1)
     connected_icon_width = NumericProperty(0)
     arm_bool = True
+
+    protect_msg_color = (0, 0, 0, 1)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -43,7 +47,7 @@ class SPIKE(App):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.mqttc = mqtt.Client(client_id="igor_pc")
+        self.mqttc = mqtt.Client()
 
     def on_start(self):
 
@@ -79,12 +83,14 @@ class SPIKE(App):
 
     def connect_to_mqtt(self, widget):
         if widget.state == "down":
-            self.mqttc.connect("test.mosquitto.org", 1883)
+            if self.mqttc.connect("test.mosquitto.org", 1883) != 0
+                print("Could not connect to broker!")
             self.mqttc.loop_start()
-            self.manager.connect_status = "Connected"
+            self.manager.connect_status = "Connected!"
             self.manager.connect_button_text = "Disconnect"
             self.manager.connected_icon_width = 1
             self.manager.disconnected_icon_width = 0
+            self.manager.current = "arm"
         else:
             self.mqttc.disconnect()
             self.mqttc.loop_stop()
