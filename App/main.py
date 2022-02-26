@@ -83,7 +83,7 @@ class SPIKE(App):
 
     def connect_to_mqtt(self, widget):
         if widget.state == "down":
-            if self.mqttc.connect("test.mosquitto.org", 1883) != 0
+            if self.mqttc.connect("test.mosquitto.org", 1883) != 0:
                 print("Could not connect to broker!")
             self.mqttc.loop_start()
             self.manager.connect_status = "Connected!"
