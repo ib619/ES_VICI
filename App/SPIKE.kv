@@ -21,13 +21,13 @@ MyScreenManager:
                     font_size: "72dp"
                     text_size: self.width, None
                     halign: "center"
-                    markup: True
-                    text: '[color=000000]VICI[/color]'
+                    color: 0,0,0,1
+                    text: 'VICI'
                     font_name: "fonts/Gothic/GothicA1-Light.ttf"
                     size_hint_y: 0.5
 
                 RoundedLabel:
-                    font_size: "20dp"
+                    font_size: "18dp"
                     text_size: self.width * 0.9, None
                     halign: "center"
                     text: root.connect_status
@@ -114,18 +114,6 @@ MyScreenManager:
                         width: self.parent.width * root.warning_width
                         height: self.parent.height * 0.5
 
-                NavButton:
-                    on_press: root.transition.direction = "left"; root.current = "settings"
-
-                    Image:
-                        source: "images/setting.png"
-                        allow_stretch: True
-                        keep_ratio: True
-                        center_x: self.width and self.parent.center_x
-                        center_y: self.height and self.parent.center_y
-                        size_hint_y: None
-                        height: self.parent.height * 0.5
-
     Screen:
         name: "arm"
         BoxLayout:
@@ -146,9 +134,10 @@ MyScreenManager:
                     size_hint_y: 0.5
 
                 RoundedLabel:
-                    font_size: "20dp"
+                    font_size: "18dp"
                     text_size: self.width, None
                     halign: "center"
+                    color: root.protect_msg_color
                     text: root.protect_status
 
                 RoundedToggle:
@@ -236,44 +225,6 @@ MyScreenManager:
                         width: self.parent.width * root.warning_width
                         height: self.parent.height * 0.5
 
-                NavButton:
-                    on_press: root.transition.direction = "left"; root.current = "settings"
-
-                    Image:
-                        source: "images/setting.png"
-                        allow_stretch: True
-                        keep_ratio: True
-                        center_x: self.width and self.parent.center_x
-                        center_y: self.height and self.parent.center_y
-                        size_hint_y: None
-                        height: self.parent.height * 0.5
-
-    Screen:
-        name: "settings"
-        BoxLayout:
-            orientation: "vertical"
-
-            Button:
-                text: "Settings"
-
-            BoxLayout:
-                orientation: "horizontal"
-                size_hint: 1, .1
-                padding: 1,0,1,0
-                spacing: 1
-
-                Button:
-                    text: "Connect"
-                    on_press: root.transition.direction = "right"; root.current = "connect"
-
-                Button:
-                    text: "Arm"
-                    on_press: root.transition.direction = "right"; root.current = "arm"
-
-                Button:
-                    text: "Settings"
-                    on_press: root.current = "settings"
-
 
 <RoundedButton@Button>:
     background_color: 0,0,0,0
@@ -289,7 +240,7 @@ MyScreenManager:
     background_color: 0,0,0,0
     canvas.before:
         Color:
-            rgba: (249/255, 139/255, 135/255, 1) if self.state == 'normal' else (141/255, 253/255, 135/255, 1)
+            rgba: (247/255, 95/255, 110/255, 1) if self.state == 'normal' else (50/255, 209/255, 92/255, 1)
         RoundedRectangle:
             pos: self.pos
             size: self.size
