@@ -4,7 +4,7 @@ from kivy.properties import StringProperty, BooleanProperty, NumericProperty, Cl
 from kivy.uix.screenmanager import ScreenManager
 from kivy.core.window import Window
 import time
-import plyer
+import ssl
 
 
 class MyScreenManager(ScreenManager):
@@ -24,6 +24,7 @@ class MyScreenManager(ScreenManager):
     connected_icon_width = NumericProperty(0)
     arm_bool = True
 
+    #protect_msg_color = (227/255, 40/255, 40/255, 1)
     protect_msg_color = (0, 0, 0, 1)
 
     def __init__(self, **kwargs):
@@ -48,6 +49,7 @@ class SPIKE(App):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.mqttc = mqtt.Client()
+        self.mqttc.tls_set(ca_certs="mosquitto.org.crt", certfile="client.cer", keyfile="client.key", tls_version=ssl.PROTOCOL_TLSv1_2)
 
     def on_start(self):
 
@@ -72,7 +74,7 @@ class SPIKE(App):
                 self.manager.shield_protected_width = 0
                 self.manager.shield_unprotected_width = 1
             if msg.topic == "VICI/test/spike":
-                self.manager.protect_status = "DANGER:\n You drink was SPIKED!!!"
+                self.manager.protect_status = "DANGER:\n \n Your drink may have been SPIKED!"
                 self.manager.arm_button_disabled = False
                 self.manager.warning_width = 1
                 self.manager.shield_protected_width = 0
@@ -83,7 +85,7 @@ class SPIKE(App):
 
     def connect_to_mqtt(self, widget):
         if widget.state == "down":
-            if self.mqttc.connect("test.mosquitto.org", 1883) != 0:
+            if self.mqttc.connect("test.mosquitto.org", 8884) != 0:
                 print("Could not connect to broker!")
             self.mqttc.loop_start()
             self.manager.connect_status = "Connected!"
