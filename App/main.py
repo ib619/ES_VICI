@@ -1,6 +1,6 @@
 from kivy.app import App
 import paho.mqtt.client as mqtt
-from kivy.properties import StringProperty, BooleanProperty, NumericProperty, Clock
+from kivy.properties import StringProperty, BooleanProperty, NumericProperty, Clock, ObjectProperty
 from kivy.uix.screenmanager import ScreenManager
 from kivy.core.window import Window
 import time
@@ -25,7 +25,7 @@ class MyScreenManager(ScreenManager):
     arm_bool = True
 
     #protect_msg_color = (227/255, 40/255, 40/255, 1)
-    protect_msg_color = (0, 0, 0, 1)
+    protect_msg_color = ObjectProperty((0, 0, 0, 1))
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -34,7 +34,7 @@ class MyScreenManager(ScreenManager):
         self.arm_bool = False
         self.ids.arm_toggle.state = "normal"
         self.arm_button_disabled = False
-        self.protect_status = "Could not connect: Please check connection status"
+        self.protect_status = "Could not arm: Please check connection status"
         Clock.schedule_once(self.enable_arm, 1)
 
     def enable_arm(self, dt):
@@ -49,7 +49,6 @@ class SPIKE(App):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.mqttc = mqtt.Client()
-        self.mqttc.tls_set(ca_certs="mosquitto.org.crt", certfile="client.cer", keyfile="client.key", tls_version=ssl.PROTOCOL_TLSv1_2)
 
     def on_start(self):
 
@@ -62,19 +61,20 @@ class SPIKE(App):
             msg.payload = msg.payload.decode("utf-8")
             if msg.topic == "VICI/test/armed":
                 Clock.unschedule(self.arm_event)
-                self.manager.protect_status = "You drink is protected!"
+                self.manager.protect_status = "Your drink is protected!"
                 self.manager.arm_button_disabled = False
                 self.manager.warning_width = 0
                 self.manager.shield_protected_width = 1
                 self.manager.shield_unprotected_width = 0
-            if msg.topic == "VICI/test/disarmed":
-                self.manager.protect_status = "You drink is not protected!"
+            elif msg.topic == "VICI/test/disarmed":
+                self.manager.protect_status = "Your drink is not protected!"
                 self.manager.arm_button_disabled = False
                 self.manager.warning_width = 0
                 self.manager.shield_protected_width = 0
                 self.manager.shield_unprotected_width = 1
-            if msg.topic == "VICI/test/spike":
-                self.manager.protect_status = "DANGER:\n \n Your drink may have been SPIKED!"
+            elif msg.topic == "VICI/test/spike":
+                protect_msg_color = (227/255, 40/255, 40/255, 1)
+                self.manager.protect_status = '[color=FF0000]DANGER:\n \n Your drink may have been SPIKED![/color]'
                 self.manager.arm_button_disabled = False
                 self.manager.warning_width = 1
                 self.manager.shield_protected_width = 0
@@ -85,7 +85,7 @@ class SPIKE(App):
 
     def connect_to_mqtt(self, widget):
         if widget.state == "down":
-            if self.mqttc.connect("test.mosquitto.org", 8884) != 0:
+            if self.mqttc.connect("ec2-13-40-209-250.eu-west-2.compute.amazonaws.com", 1883, 3600) != 0:
                 print("Could not connect to broker!")
             self.mqttc.loop_start()
             self.manager.connect_status = "Connected!"

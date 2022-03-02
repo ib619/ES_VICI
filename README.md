@@ -31,7 +31,7 @@ The measurements are being passed through a moving average filter to remove some
 The script uses multithreading to continuously receive data from Raspberry Pi via MQTT and plot the data in real time.
 
 #### Running the script
-1. Install the following libraries
+1. Install the following libraries:
 	* paho-mqtt
 	* matplotlib
 2. Run **pc_plot_acc.py**
@@ -45,7 +45,18 @@ The script uses multithreading to continuously receive data from Raspberry Pi vi
 In addition to the secure MQTT protocol for communication between your device and the Pi, a few advanced features are added to ensure accurate and efficient transfer of data from the sensors and to improve user experience.
 
 #### Filtering input sensor data
-A moving average filter is used to remove high frequency noise from the sensor data. 
+A moving average filter is used to remove high frequency noise from the sensor data.
 #### Loosing connection to your device and reconnecting
 In the case that a user moves to an area where they are not able to connect to their device, the device will detect a loss of connection and begin to store event data locally. Once the connection is re-established, the device will update the user if there where any drink spike events detected.
 #### Push notifications to alert of a possible spike event
+
+### App
+#### Running the script
+1. Install the following libraries:
+	* kivy
+	* paho-mqtt
+2. Run **main.py** using Python 3
+
+#### UI
+1. Left screen is used to connect to MQTT from the app.
+2. Right screen is used to arm/disarm the device.
