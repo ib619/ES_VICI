@@ -37,7 +37,7 @@ class MqttThread(threading.Thread):
         self.name = name
         self.client = mqtt.Client("vici_raspi")
         # SSL connection when connecting to port 8884 with encryption and client authentication
-        #self.client.tls_set(ca_certs="domain name", certfile="client.cer", keyfile="client.key",
+        # self.client.tls_set(ca_certs="domain name", certfile="client.cer", keyfile="client.key",
         #             tls_version=ssl.PROTOCOL_TLSv1_2)
         self.client.connect("ec2-xx-xx-xx-xxx.eu-west-2.compute.amazonaws.com", port=1883, keepalive= 3600)
 
@@ -51,19 +51,19 @@ class MqttThread(threading.Thread):
         topic = msg.topic
         command = msg.payload.decode()
         global ARMED_FLAG
-        # arm when you want to sense for spike events
+        # Arm when you want to sense for spike events
         if topic == "VICI/test/arm":
             time.sleep(1)
             client.publish("VICI/test/armed", "armed")
             led.color = (1,1,0)
             ARMED_FLAG = True
-        # disarm when you want to stop sensing for spike events
+        # Disarm when you want to stop sensing for spike events
         if topic == "VICI/test/disarm":
             time.sleep(1)
             client.publish("VICI/test/disarmed", "disarmed")
             led.color = (1,0,1)
             ARMED_FLAG = False
-    # send spike event when detected
+    # Send spike event when detected
     def send_spike_message(self):
         self.client.publish("VICI/test/spike", "spike")
 
@@ -81,7 +81,7 @@ class StreamingMovingAverage:
             self.sum -= self.values.pop(0)
         return float(self.sum) / len(self.values)
 
-# read data from accelerometer 1
+# Read and 'clean' data from accelerometer 1
 def get_data_acc1(bus):
     # Get X axis acceleration
     xdata0 = bus.read_byte_data(0x18, 0x28)
@@ -136,7 +136,7 @@ def get_data_acc1(bus):
     if len(z_arr_18) > ARRAY_SIZE:
         z_arr_18.pop(0)
 
-# read data from accelerometer 2
+# Read and 'clean' data from accelerometer 2
 def get_data_acc2(bus):
     # Get X axis acceleration
     xdata0 = bus.read_byte_data(0x19, 0x28)
