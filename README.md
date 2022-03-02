@@ -7,19 +7,24 @@
 - Srivastava Varun (vs4918)
 
 ## SpikeGuard Project description
+### Installing Dependencies
 
 
 
 ## Features and Connectivity
 In addition to the secure MQTT protocol for communication between your device and the Pi, a few advanced features are added to ensure accurate and efficient transfer of data from the sensors and to improve user experience.
-
+####
+Two accelerometer are places diagonally opposite each other with opposite XYZ frame assignments. Their differential input is used to detect changes in movements of the lid. In addition tilt angles are caluculated to detect any "lifting" or "bending" of the flexible lid in spike event detection 
 #### Filtering input sensor data
 A moving average filter is used to remove high frequency noise from the sensor data.
 #### Loosing connection to your device and reconnecting
 In the case that a user moves to an area where they are not able to connect to their device, the device will detect a loss of connection and begin to store event data locally. Once the connection is re-established, the device will update the user if there where any drink spike events detected through the app.
 #### Secure MQTT broker
 Hosting an MQTT broker on an ubuntu AWS vitual machine using using AWS E2C instance. Port 1883 and port 8884 are available, port 8884 requires an SSL certificate and key for an encrypted connection with client authentication.
-#### Secure MQTT broker
+#### Spike Event Detection
+In a Spike event detection cycle where counter = N, 10 in this case, must obtain M or more Spikes, 8 in this case, to alert user of a Spike event detection. Spikes are detected using changes in differential X,Y,Z positions aswell as the tilt angles in X and Y direction (tilt in Z represents the lid spinning and has not proven useful).
+
+Event detection, cycle period and spike detection threshold values are tuned to remain very sensetive to any changes in lid movements but not simple vibrations or movements which would send a fale positiive event detection. False Nngatives are unacceptable given the usecase of the device and hence the threshold values have been calibrated to prevent this from happening
 
 ## App
 #### Running the script
