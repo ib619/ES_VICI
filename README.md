@@ -1,4 +1,4 @@
-# Embedded Systems: Team VICI
+# Embedded Systems: Team VICI - SpikeGuard
 
 ## Participants
 - Bodnar Igor (ib619)
@@ -6,20 +6,22 @@
 - Stretcu Catalin (ms5919)
 - Srivastava Varun (vs4918)
 
+## SpikeGuard
 
 
 
-
-### Advanced features
+## Features and Connectivity
 In addition to the secure MQTT protocol for communication between your device and the Pi, a few advanced features are added to ensure accurate and efficient transfer of data from the sensors and to improve user experience.
 
 #### Filtering input sensor data
 A moving average filter is used to remove high frequency noise from the sensor data.
 #### Loosing connection to your device and reconnecting
-In the case that a user moves to an area where they are not able to connect to their device, the device will detect a loss of connection and begin to store event data locally. Once the connection is re-established, the device will update the user if there where any drink spike events detected.
-#### Push notifications to alert of a possible spike event
+In the case that a user moves to an area where they are not able to connect to their device, the device will detect a loss of connection and begin to store event data locally. Once the connection is re-established, the device will update the user if there where any drink spike events detected through the app.
+#### Secure MQTT broker
+Hosting an MQTT broker on an ubuntu AWS vitual machine using using AWS E2C instance. Port 1883 and port 8884 are available, port 8884 requires an SSL certificate and key for an encrypted connection with client authentication.
+#### Secure MQTT broker
 
-### App
+## App
 #### Running the script
 1. Install the following libraries:
 	* kivy
@@ -31,8 +33,7 @@ In the case that a user moves to an area where they are not able to connect to t
 2. Right screen is used to arm/disarm the device.
 
 
-# Testing sensors 
-## Plotting Accelerometer Data
+# Testing Accelerometers
 ### Raspberry Pi
 #### Overview
 The script configures the acceletrometer to collect data at 10Hz rate continuously with range +/-2G.
