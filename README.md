@@ -25,7 +25,7 @@ pip install kivy[base]
 ```
 python main.py 
 python device_main_final.py
-
+```
 
 ## Features and Connectivity
 In addition to the secure MQTT protocol for communication between your device and the Pi, a few advanced features are added to ensure accurate and efficient transfer of data from the sensors and to improve user experience.
