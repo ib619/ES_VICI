@@ -138,6 +138,7 @@ MyScreenManager:
                     text_size: self.width, None
                     halign: "center"
                     color: root.protect_msg_color
+                    markup: True
                     text: root.protect_status
 
                 RoundedToggle:
@@ -190,7 +191,7 @@ MyScreenManager:
                         height: self.parent.height * 0.5
 
                 NavButton:
-                    on_press: root.current = "arm"
+                    on_press: root.transition.direction = "left"; root.current = "arm"
 
                     Image:
                         source: "images/shield_unprotected.png"

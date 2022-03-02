@@ -1,6 +1,6 @@
 from kivy.app import App
 import paho.mqtt.client as mqtt
-from kivy.properties import StringProperty, BooleanProperty, NumericProperty, Clock
+from kivy.properties import StringProperty, BooleanProperty, NumericProperty, Clock, ObjectProperty
 from kivy.uix.screenmanager import ScreenManager
 from kivy.core.window import Window
 import time
@@ -25,7 +25,7 @@ class MyScreenManager(ScreenManager):
     arm_bool = True
 
     #protect_msg_color = (227/255, 40/255, 40/255, 1)
-    protect_msg_color = (0, 0, 0, 1)
+    protect_msg_color = ObjectProperty((0, 0, 0, 1))
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -73,7 +73,8 @@ class SPIKE(App):
                 self.manager.shield_protected_width = 0
                 self.manager.shield_unprotected_width = 1
             elif msg.topic == "VICI/test/spike":
-                self.manager.protect_status = "DANGER:\n \n Your drink may have been SPIKED!"
+                protect_msg_color = (227/255, 40/255, 40/255, 1)
+                self.manager.protect_status = '[color=FF0000]DANGER:\n \n Your drink may have been SPIKED![/color]'
                 self.manager.arm_button_disabled = False
                 self.manager.warning_width = 1
                 self.manager.shield_protected_width = 0
