@@ -39,6 +39,7 @@ class MqttThread(threading.Thread):
         # SSL connection when connecting to port 8884 with encryption and client authentication
         # self.client.tls_set(ca_certs="domain name", certfile="client.cer", keyfile="client.key",
         #             tls_version=ssl.PROTOCOL_TLSv1_2)
+        # The AWS domain has been removed for security purposes, please use open test ports like test.mosquitto.org if you would like to run the script
         self.client.connect("ec2-xx-xx-xx-xxx.eu-west-2.compute.amazonaws.com", port=1883, keepalive= 3600)
 
     def run(self):
