@@ -68,7 +68,7 @@ The measurements are being passed through a moving average filter to remove some
 2. Run **raspi_plot_acc.py**
 3. The script operation can be changed via altering constants inside **raspi_plot_acc.py**
 	* **MEASURE_INTERVAL** sets the measurement period in seconds (default = 0.1)
-	* **FILTER_WINDOW_SIZE** sets the buffer lenght for a moving average filter (default = 16)
+	* **FILTER_WINDOW_SIZE** sets the buffer lenght for a moving average filter (default = 4)
 	* **PACKET_SIZE** sets the number of measurements in a packet (default = 16)
 	* **NUMBER_OF_PACKETS** sets the total number of packets to be sent to PC (default = 6)
 	* **REMOVE_GRAVITY_OFFSET** removes 1G offset due to gravity from Z-Axis measurement (default = True)
