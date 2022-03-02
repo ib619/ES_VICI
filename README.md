@@ -25,16 +25,12 @@ pip install kivy[base]
 ```
 python main.py 
 python device_main_final.py
-```
-
-### Installing Dependencies
-
 
 
 ## Features and Connectivity
 In addition to the secure MQTT protocol for communication between your device and the Pi, a few advanced features are added to ensure accurate and efficient transfer of data from the sensors and to improve user experience.
 ### Sensor data 
-Two accelerometer are places diagonally opposite each other with opposite XYZ frame assignments. Their differential input is used to detect changes in movements of the lid. In addition tilt angles are caluculated to detect any "lifting" or "bending" of the flexible lid in spike event detection 
+Two accelerometer are placed diagonally opposite each other with opposite XYZ frame assignments. Their differential input is used to detect changes in movements of the lid. In addition tilt angles are caluculated to detect any "lifting" or "bending" of the flexible lid in spike event detection.
 ### Filtering input sensor data
 A moving average filter is used to remove high frequency noise from the sensor data.
 ### Loosing connection to your device and reconnecting
