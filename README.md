@@ -7,13 +7,13 @@ Please visit our official website <a href = "https://vici-embedded-system.bubble
 - Srivastava Varun (vs4918)
 
 ## SpikeGuard Project description
-SpikeGuard is a universal lid that can protect your drink from getting spiked, it is flexible and can fit on any cup size. It uses a Raspberry Pi Zero, a pair of accelerometers and an app built on the kivy framework in order to notify the user if their drink has been tampered with. All of the accelerometer data is processed on the Raspberry Pi and important messages are sent to the app via MQTT. The repo contains the code for both the data processing scripts that run on the Raspberry Pi and for the Kivy app, as well as some Python scripts used for the testing of MQTT communication and sensor event detection. Observe below the dependencies, instructions and features of this project.
+SpikeGuard is a universal lid that can protect your drink from getting spiked, it is flexible and can fit on any cup size. It uses a Raspberry Pi Zero, a pair of accelerometers and an app built on the kivy framework in order to notify the user if their drink has been tampered with. All of the accelerometer data is processed on the Raspberry Pi and important messages are sent to the app via our encrypted MQTT broker hosted on AWS EC2 Ubuntu virtual machine. The repo contains the code for both the data processing scripts that run on the Raspberry Pi and for the Kivy app, as well as some Python scripts used for the testing of MQTT communication and sensor event detection. Observe below the dependencies, instructions and features of this project.
 
 ### Installing Dependencies
 ```
 pip install paho-mqtt
 pip install numpy
-pip install GPIO
+pip install RPi.GPIO
 pip install smbus2
 pip install ssl
 pip install urllib
