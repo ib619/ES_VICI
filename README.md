@@ -6,7 +6,7 @@
 - Stretcu Catalin (ms5919)
 - Srivastava Varun (vs4918)
 
-## SpikeGuard
+## SpikeGuard Project description
 
 
 
