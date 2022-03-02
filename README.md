@@ -1,5 +1,5 @@
 # Embedded Systems: Team VICI - SpikeGuard
-
+Please visit our official website <a href = "https://vici-embedded-system.bubbleapps.io/version-test/"> here </a>.
 ## Participants
 - Bodnar Igor (ib619)
 - Bqain Issa (ib818)
@@ -8,6 +8,8 @@
 
 ## SpikeGuard Project description
 SpikeGuard is a universal lid that can protect your drink from getting spiked. It uses a Raspberry Pi Zero, a pair of accelerometers and a Kivy app in order to notify the user if their drink has been tempered with. All of the accelerometer data is processed on the Raspberry Pi and important messages are sent to the app via MQTT. The repo contains the code for both the data processing scripts that run on the Raspberry Pi and for the Kivy app, as well as some Python scripts used for the testing of MQTT communication.
+
+
 
 ### Installing Dependencies
 
