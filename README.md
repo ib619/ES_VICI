@@ -7,6 +7,8 @@
 - Srivastava Varun (vs4918)
 
 ## SpikeGuard Project description
+SpikeGuard is a universal lid that can protect your drink from getting spiked. It uses a Raspberry Pi Zero, a pair of accelerometers and a Kivy app in order to notify the user if their drink has been tempered with. All of the accelerometer data is processed on the Raspberry Pi and important messages are sent to the app via MQTT. The repo contains the code for both the data processing scripts that run on the Raspberry Pi and for the Kivy app, as well as some Python scripts used for the testing of MQTT communication.
+
 ### Installing Dependencies
 
 
