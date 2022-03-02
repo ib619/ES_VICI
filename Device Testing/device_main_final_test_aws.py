@@ -8,9 +8,6 @@ import ssl
 import sys
 import urllib
 import urllib.request
-import numpy as np
-import math
-from math import copysign
 
 # Initialise constants
 MEASURE_INTERVAL = 0.1
@@ -36,10 +33,10 @@ class MqttThread(threading.Thread):
         self.threadID = thread_id
         self.name = name
         self.client = mqtt.Client("vici_raspi")
-        # SSL connection when connecting to port 8884 with encryption and client authentication
-        #self.client.tls_set(ca_certs="domain name", certfile="client.cer", keyfile="client.key",
-        #             tls_version=ssl.PROTOCOL_TLSv1_2)
-        self.client.connect("ec2-xx-xx-xx-xxx.eu-west-2.compute.amazonaws.com", port=1883, keepalive= 3600)
+        # SSL connection
+        self.client.tls_set(ca_certs="mosquitto.org.crt", certfile="client.cer", keyfile="client.key",
+                       tls_version=ssl.PROTOCOL_TLSv1_2)
+        self.client.connect("test.mosquitto.org", port=8884)
 
     def run(self):
         self.client.on_message = self.on_message
@@ -51,23 +48,24 @@ class MqttThread(threading.Thread):
         topic = msg.topic
         command = msg.payload.decode()
         global ARMED_FLAG
-        # arm when you want to sense for spike events
         if topic == "VICI/test/arm":
             time.sleep(1)
             client.publish("VICI/test/armed", "armed")
             led.color = (1,1,0)
             ARMED_FLAG = True
-        # disarm when you want to stop sensing for spike events
+
         if topic == "VICI/test/disarm":
             time.sleep(1)
             client.publish("VICI/test/disarmed", "disarmed")
             led.color = (1,0,1)
             ARMED_FLAG = False
-    # send spike event when detected
+
     def send_spike_message(self):
         self.client.publish("VICI/test/spike", "spike")
 
-# Class implementing a real-time moving average filter used to reduce the noise in accelerometer readings
+# Class implementing a real-time moving average filter
+# Used to reduce the noise in accelerometer readings
+# Also Smooth out values to avoid small "shock" movements leading to event detection.
 class StreamingMovingAverage:
     def __init__(self, window_size):
         self.window_size = window_size
@@ -81,7 +79,7 @@ class StreamingMovingAverage:
             self.sum -= self.values.pop(0)
         return float(self.sum) / len(self.values)
 
-# read data from accelerometer 1
+
 def get_data_acc1(bus):
     # Get X axis acceleration
     xdata0 = bus.read_byte_data(0x18, 0x28)
@@ -136,7 +134,7 @@ def get_data_acc1(bus):
     if len(z_arr_18) > ARRAY_SIZE:
         z_arr_18.pop(0)
 
-# read data from accelerometer 2
+
 def get_data_acc2(bus):
     # Get X axis acceleration
     xdata0 = bus.read_byte_data(0x19, 0x28)
@@ -269,14 +267,12 @@ while True:
         get_data_acc2(bus)
         time.sleep(MEASURE_INTERVAL)
 
-        # take reading
+# take reading
         if len(z_arr_18) > 15:
             diffx = x_arr_18[-1] - x_arr_19[-1]
             diffy = y_arr_18[-1] - y_arr_19[-1]
             diffz = z_arr_18[-1] - z_arr_19[-1]
-            x_angle, y_angle, z_angle = angle_calculator(x_arr_19[-1], y_arr_19[-1], z_arr_19[-1])
 
-            # checks if disconnected from internet and waits before sending spike event detection to app
             if offline_spike == 1:
                 while offline == 1:
                     offline = 0
@@ -293,25 +289,18 @@ while True:
                         offline_spike = 0
                     print("offline spike")
 
-            # Threshold detection checking for spike events
             if abs(diffx) > abs(diffxth)+1.6 or abs(diffx) < abs(diffxth) - 1.6:
                 spikex = spikex + 1
             if abs(diffy) > abs(diffyth)+ 1.6 or abs(diffy) < abs(diffyth) - 1.6:
                 spikey = spikey + 1
             if abs(diffz) > abs(diffzth)+ 1.6 or abs(diffz) < abs(diffzth) - 1.2:
                 spikez = spikez + 1
-            if (abs(x_angle) > abs(x_angleth) + 30 or abs(x_angle) < abs(x_angleth) - 30):
-                print("spikex")
-                spikex = spikex + 1
-            if (abs(y_angle) > abs(y_angleth) + 30 or abs(y_angle) < abs(y_angleth) - 30):
-                print("spikey")
-                spikey = spikey + 1
 
             totalspike = spikez + spikey + spikex
             print(f" spiketotal - {totalspike}")
+            counter = counter + 1
             print(f"counter -  {counter}")
 
-            # spike event detected, notify to app
             if(totalspike > 7 ):
                 offline_spike = 0
                 try:
@@ -368,19 +357,12 @@ while True:
             diffxth = x_arr_18[-1] - x_arr_19[-1]
             diffyth = y_arr_18[-1] - y_arr_19[-1]
             diffzth = z_arr_18[-1] - z_arr_19[-1]
-            x_angleth, y_angleth, z_angleth = angle_calculator(x_arr_19[-1], y_arr_19[-1], z_arr_19[-1])
 
-        print(f" x_angle - {x_angle}\n")
-        print(f" y_angle - {y_angle}\n")
-        print(f" z_angle - {z_angle}\n")
-        print("########################")
-        print(f" x_angleth - {x_angleth}\n")
-        print(f" y_angleth - {y_angleth}\n")
-        print(f" z_angleth - {z_angleth}\n")
 
-        #print(f"Differential X data - {diffx}")
-        #print(f"Differential Y data - {diffy}")
-        #print(f"Differential Z data - {diffz}\n")
-        #print(f"Differential X data - {diffxth}")
-        #print(f"Differential Y data - {diffyth}")
-        #print(f"Differential Z data - {diffzth}\n")
+    #print(f"Differential X data - {diffx}")
+    #print(f"Differential Y data - {diffy}")
+    #print(f"Differential Z data - {diffz}\n")
+
+    #print(f"Differential X data - {diffxth}")
+    #print(f"Differential Y data - {diffyth}")
+    #print(f"Differential Z data - {diffzth}\n")
